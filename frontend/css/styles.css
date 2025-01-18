@@ -332,9 +332,10 @@ body {
 }
 
 .feedback-textarea {
+    margin-top: 20px;
     width: 100%;
     min-height: 120px;
-    padding-top: 50px;
+    padding-top: 20px;
     border: 1px solid var(--gray-300);
     border-radius: 0.375rem;
     resize: vertical;
