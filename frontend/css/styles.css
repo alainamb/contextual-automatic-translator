@@ -262,6 +262,10 @@ body {
     padding: 1.5rem;
 }
 
+.ul {
+    margin: 5px;
+}
+
 .feedback-container {
     display: flex;
     flex-direction: column;
