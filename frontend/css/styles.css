@@ -263,7 +263,8 @@ body {
 }
 
 .ul {
-    margin: 5px 5px;
+    margin: 5px;
+    padding-left: 20px
 }
 
 .feedback-container {
