@@ -232,25 +232,41 @@ body {
 
 .progress-bar {
     height: 1rem;
-    background-color: var(--gray-200);
+    background-color: transparent; /* No need for a background color here */
     border-radius: 9999px;
+    position: relative; /* Enables absolute positioning of fills inside */
 }
 
 .progress-bar-fill {
     height: 100%;
     border-radius: 9999px;
+    position: absolute; /* Positions fill elements absolutely within the progress bar */
+    left: 0; /* Align fills to the left edge */
+    top: 0; /* Align fills to the top edge */
+}
+
+.progress-bar-fill.gray {
+    background-color: var(--gray-200); /* Ensure this is defined in your :root or elsewhere in CSS */
+    width: 100%; /* Full width for the gray background */
+    z-index: 1; /* Lower z-index to keep it behind the colored fills */
 }
 
 .progress-bar-fill.blue {
     background-color: var(--primary-blue);
+    width: 0%; /* Starts with 0%, adjust based on performance */
+    z-index: 2; /* Higher z-index to overlay on the gray fill */
 }
 
 .progress-bar-fill.green {
     background-color: var(--primary-green);
+    width: 0%; /* Starts with 0%, adjust based on performance */
+    z-index: 2; /* Higher z-index to overlay on the gray fill */
 }
 
 .progress-bar-fill.purple {
     background-color: var(--primary-purple);
+    width: 0%; /* Starts with 0%, adjust based on performance */
+    z-index: 2; /* Higher z-index to overlay on the gray fill */
 }
 
 /* Feedback Section Styles */
@@ -332,7 +348,7 @@ body {
 }
 
 .feedback-textarea {
-    margin-top: 5px;
+    margin-top: 10px;
     width: 100%;
     min-height: 120px;
     padding: 15px 15px;
