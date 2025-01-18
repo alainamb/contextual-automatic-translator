@@ -200,7 +200,7 @@ body {
 
 .translate-button {
     padding: 0.5rem 1rem;
-    background-color: var(--primary-green);
+    background-color: var(--primary-blue);
     color: white;
     border-radius: 0.375rem;
 }
