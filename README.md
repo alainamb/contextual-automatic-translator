@@ -22,6 +22,23 @@ This project investigates potential improvements to machine translation by combi
 - `/data` - Corpora and knowledge graph data
 - `/docs` - Project documentation
 
+├── frontend/                 # Your HTML/CSS/JS (later React) code
+│   ├── src/
+│   ├── styles/
+│   └── index.html
+├── backend/                  # Python/LangChain code (for later)
+│   ├── src/
+│   ├── requirements.txt
+│   └── README.md
+├── evaluation/              # Translation quality evaluation tools
+│   └── metrics/
+├── data/                    # For corpus and graph data
+│   ├── corpora/
+│   └── knowledge_graph/
+├── docs/                    # Documentation
+├── LICENSE
+└── README.md
+
 ## Current Status
 This project is in early experimental stages. The implementation will progress as follows:
 1. Frontend development (HTML/CSS/JavaScript/React)
