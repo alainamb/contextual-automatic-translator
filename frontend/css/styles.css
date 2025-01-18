@@ -264,7 +264,8 @@ body {
 
 .ul {
     padding-top: 5px;
-    padding-left: 20px
+    padding-left: 20px;
+    padding-bottom: 5px;
 }
 
 .feedback-container {
