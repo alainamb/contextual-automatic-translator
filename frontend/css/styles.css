@@ -334,7 +334,7 @@ body {
 .feedback-textarea {
     width: 100%;
     min-height: 120px;
-    padding: 0.75rem;
+    padding-top: 5px;
     border: 1px solid var(--gray-300);
     border-radius: 0.375rem;
     resize: vertical;
