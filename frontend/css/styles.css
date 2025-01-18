@@ -47,11 +47,11 @@ body {
     color: var(--gray-800);
 }
 
-.nav-buttons {
+.nav-items {
     margin-top: 0.5rem;
 }
 
-.nav-button {
+.nav-item {
     padding: 0.25rem 0.75rem;
     font-size: 0.875rem;
     font-weight: 500;
@@ -59,7 +59,7 @@ body {
     border-bottom: 2px solid transparent;
 }
 
-.nav-button:hover {
+.nav-item:hover {
     color: var(--gray-900);
     border-bottom-color: var(--gray-300);
 }
