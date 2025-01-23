@@ -101,10 +101,14 @@ body {
     gap: 5px;
 }
 
-div{
+.grid-visualization{
     background: #FFFF99;
     padding: 30px;
     text-align: center;
+}
+
+.grid-visualization:nth-of-type(odd){
+    background: #99FFCC
 }
 
 /* Section styles */
