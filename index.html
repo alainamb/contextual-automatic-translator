@@ -12,113 +12,388 @@
             <h1 class="nav-title">Corpus-Graph Document Translation</h1>
             <div class="nav-items">
                 <button class="nav-item">Translation</button>
-                <button class="nav-item">Analysis</button>
+                <button class="nav-item">Reporting</button>
                 <button class="nav-item">About</button>
+                <button class="nav-item">References</button>
             </div>
         </nav>
     </header>
-
-    <body> 
-        <main class="grid-layout" "grid-visualization">
-            <div>1</div>
-            <div>2</div>
-            <div>3</div>
-            <div>4</div>
-            <div>5</div>
-            <div>6</div>
-            <div>7</div>
-            <div>8</div>
-            <div>9</div>
-            <div>10</div>
-            <div>11</div>
-            <div>12</div>
-            <div>13</div>
-            <div>14</div>
-            <div>15</div>
-        </main>
-    </body>
 
     <main class="main-container">
         <div class="grid-layout">
             <!-- Source Document Section -->
             <section class="section-card">
-                <h2 class="section-title">Source content</h2>
+                <h2>Source content</h2>
                 <div class="input-container">
                     <div class="upload-area">
                         <input type="file" id="documentUpload" class="hidden" accept=".txt,.doc,.docx,.pdf">
                         <label for="documentUpload" class="upload-label">
-                            <span class="upload-text">Drop your document here or</span>
+                            <span class="upload-text">Drop a document here or</span>
                             <span class="buttons">Browse Files</span>
                         </label>
                     </div>
-                    <div class="text-container">
+                    <div>
                         <textarea id="sourceText" class="text-input" placeholder="Or paste your text here..."></textarea>
                     </div>
+                    <div>
+                        <label for="analyzeDocument" class="analyze-label">
+                            <span class="buttons">Analyze content</span>
+                        </label>                        
+                    </div>
                 </div>
             </section>
-
-            <!-- Translation Output Section -->
+            
+            <!-- Specifications Section -->
             <section class="section-card">
-                <h2 class="section-title">Translation</h2>
-                <div class="translation-container">
-                    <div class="translation-controls">
-                        <div class="language-selector">
-                            <span class="language-display">English (US)</span>
-                            <button class="direction-button" aria-label="Reverse translation direction">
-                                <svg xmlns="http://www.w3.org/2000/svg" class="icon" viewBox="0 0 20 20" fill="currentColor">
-                                    <path fill-rule="evenodd" d="M4 2a1 1 0 011 1v2.101a7.002 7.002 0 0111.601 2.566 1 1 0 11-1.885.666A5.002 5.002 0 005.999 7H9a1 1 0 010 2H4a1 1 0 01-1-1V3a1 1 0 011-1zm.008 9.057a1 1 0 011.276.61A5.002 5.002 0 0014.001 13H11a1 1 0 110-2h5a1 1 0 011 1v5a1 1 0 11-2 0v-2.101a7.002 7.002 0 01-11.601-2.566 1 1 0 01.61-1.276z" clip-rule="evenodd" />
-                                </svg>
-                            </button>
-                            <span class="language-display">Spanish (LATAM)</span>
-                        </div>
-                        <button class="buttons">Translate</button>
-                    </div>
-                    <div class="text-container">
-                        <div id="translationOutput" class="translation-output"></div>
-                    </div>
+                <h2>Content specifications</h2>
+                <div class="spex-box">
+                    <h3>Subject Field</h3>
+                    <p>
+                        The content corresponds to the collection of content in our corpus on: <b>translation and localization</b>.
+                    </p>
                 </div>
-            </section>
-        </div>
 
-        <!-- Quality Metrics Section -->
-        <section class="section-card quality-section">
-            <h2 class="section-title">Translation Quality Assessment</h2>
-            <div class="metrics-grid">
-                <div class="metric-item">
-                    <h3 class="metric-title">Corpus Integration</h3>
+                <div class="spex-grid">
+                    <div class="spex-box">
+                        <h3>Source specifications</h3>
+                        <p>Automatically determined during analysis; please verify our selections.</p>
+                        <table style="width: 100%">
+                            <tr>
+                                <td style="width: 40%">Language variant</td>
+                                <td style="width: 60%"> 
+                                    <select name="langVariant" id="langVariant">
+                                        <option value="1">Spanish for Mexico</option>
+                                        <option value="2">Spanish for Latin America</option>
+                                        <option value="3" selected>English for the United States</option>
+                                    </select>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>Text type</td>
+                                <td>
+                                    <select name="textType" id="textType">
+                                        <option value="1">Journal article</option>
+                                        <option value="2">Book chapter</option>
+                                        <option value="3">Case study</option>
+                                        <option value="4">Blog post</option>
+                                        <option value="5" selected>Essay</option>
+                                        <option value="6">FAQ</option>
+                                        <option value="7">Policy</option>
+                                        <option value="8">Press release</option>
+                                        <option value="9">Report</option>
+                                        <option value="10">Review</option>
+                                        <option value="11">Tutorial</option>
+                                        <option value="11">Translation</option>
+                                    </select>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>Purpose</td>
+                                <td>
+                                    <select name="purpose" id="purpose">
+                                        <option value="1">Informational</option>
+                                        <option value="2" selected>Persuasive</option>
+                                        <option value="3">Philosophical</option>
+                                        <option value="4">Entertainment</option>
+                                    </select>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>Point of view</td>
+                                <td>
+                                    <select name="pov" id="pov">
+                                        <option value="1">Subject matter expert</option>
+                                        <option value="2">Technical writer</option>
+                                        <option value="3">Content creator</option>
+                                        <option value="4">Researcher</option>
+                                        <option value="5">Grant writer</option>
+                                        <option value="6">Policy analyst</option>
+                                        <option value="7" selected>Copywriter</option>
+                                        <option value="8">Proposal writer</option>
+                                        <option value="9">Academic</option>
+                                        <option value="10">Reporter</option>
+                                    </select>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>Audience</td>
+                                <td>
+                                    <select name="audience" id="audience">
+                                        <option value="1">Technical</option>
+                                        <option value="2">Business</option>
+                                        <option value="3">Academic</option>
+                                        <option value="4">Professional</option>
+                                        <option value="5">Regulatory</option>
+                                        <option value="6">General public</option>
+                                        <option value="7">Internal</option>
+                                        <option value="8" selected>Clients</option>
+                                        <option value="9">Investors</option>
+                                        <option value="10">Media</option>
+                                        <option value="11">Policy makers</option>
+                                        <option value="12">Subject matter experts</option>
+                                    </select>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>Reach</td>
+                                <td>
+                                    <select name="reach" id="reach">
+                                        <option value="1">Global</option>
+                                        <option value="2" selected>Regional</option>
+                                        <option value="3">Local</option>
+                                        <option value="4">Organizational wide</option>
+                                        <option value="5">Internal team</option>
+                                        <option value="6">For informational puposes only</option>
+                                    </select>
+                                </td>
+                            </tr>
+                          </table>
+                    </div>
+                    <div class="spex-box">
+                        <h3>Target specifications</h3>
+                        <p>Please select your target language specifications</p>
+                        <table style="width: 100%">
+                            <tr>
+                                <td style="width: 40%">Language variant</td>
+                                <td style="width: 60%"> 
+                                    <select name="langVariant" id="langVariant">
+                                        <option value="1">Spanish for Mexico</option>
+                                        <option value="2">Spanish for Latin America</option>
+                                        <option value="3">English for the United States</option>
+                                    </select>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>Text type</td>
+                                <td>
+                                    <select name="textType" id="textType">
+                                        <option value="1">Localization</option>
+                                        <option value="2">Conventional translation</option>
+                                        <option value="3">Literal translation</option>
+                                        <option value="4">Back translation</option>
+                                        <option value="5">Transcreation</option>
+                                        <option value="6">Summaru</option>
+                                        <option value="7">Gisting</option>
+                                    </select>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>Purpose</td>
+                                <td>
+                                    <select name="purpose" id="purpose">
+                                        <option value="1">Informational</option>
+                                        <option value="2">Persuasive</option>
+                                        <option value="3">Philosophical</option>
+                                        <option value="4">Entertainment</option>
+                                    </select>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>Point of view</td>
+                                <td>
+                                    <select name="pov" id="pov">
+                                        <option value="1">Subject matter expert</option>
+                                        <option value="2">Technical writer</option>
+                                        <option value="3">Content creator</option>
+                                        <option value="4">Researcher</option>
+                                        <option value="5">Grant writer</option>
+                                        <option value="6">Policy analyst</option>
+                                        <option value="7">Copywriter</option>
+                                        <option value="8">Proposal writer</option>
+                                        <option value="9">Academic</option>
+                                        <option value="10">Reporter</option>
+                                    </select>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>Audience</td>
+                                <td>
+                                    <select name="audience" id="audience">
+                                        <option value="1">Technical</option>
+                                        <option value="2">Business</option>
+                                        <option value="3">Academic</option>
+                                        <option value="4">Professional</option>
+                                        <option value="5">Regulatory</option>
+                                        <option value="6">General public</option>
+                                        <option value="7">Internal</option>
+                                        <option value="8">Clients</option>
+                                        <option value="9">Investors</option>
+                                        <option value="10">Media</option>
+                                        <option value="11">Policy makers</option>
+                                        <option value="12">Subject matter experts</option>
+                                    </select>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>Reach</td>
+                                <td>
+                                    <select name="reach" id="reach">
+                                        <option value="1">Global</option>
+                                        <option value="2">Regional</option>
+                                        <option value="3">Local</option>
+                                        <option value="4">Organizational wide</option>
+                                        <option value="5">Internal team</option>
+                                        <option value="6">For informational puposes only</option>
+                                    </select>
+                                </td>
+                            </tr>
+                          </table>
+                    </div>
+                <div>
+                    <label for="translateDocument" class="translate-label">
+                        <span class="buttons">Proceed with translation</span>
+                    </label>                        
+                </div>
+            </div>
+        </section>
+
+         <!-- Translation Performance Metrics -->
+         <section class="section-card">
+            <h2>Translation Performance Metrics</h2>
+            <div class="metric-grid">
+                <div class="metric-box">
+                    <h3 class="metric-title">Corpus integration</h3>
                     <div class="progress-bar">
                         <div class="progress-bar-fill gray" style="width: 100%"></div> <!-- Gray background fill -->
                         <div class="progress-bar-fill blue" style="width: 0%"></div> <!-- Performance-based fill -->
                     </div>
                     <p class="metric-description">Domain knowledge influence</p>
                 </div>
-                <div class="metric-item">
-                    <h3 class="metric-title">Knowledge Graph</h3>
+                <div class="metric-box">
+                    <h3 class="metric-title">Knowledge graph</h3>
                     <div class="progress-bar">
                         <div class="progress-bar-fill gray" style="width: 100%"></div> <!-- Gray background fill -->
                         <div class="progress-bar-fill green" style="width: 0%"></div> <!-- Performance-based fill -->
                     </div>
                     <p class="metric-description">Terminology alignment</p>
                 </div>
-                <div class="metric-item">
-                    <h3 class="metric-title">Document-Level Analysis</h3>
+                <div class="metric-box">
+                    <h3 class="metric-title">Document-level analysis</h3>
                     <div class="progress-bar">
                         <div class="progress-bar-fill gray" style="width: 100%"></div> <!-- Gray background fill -->
                         <div class="progress-bar-fill purple" style="width: 0%"></div> <!-- Performance-based fill -->
                     </div>
-                    <p class="metric-description">Cross-document coherence score</p>
+                    <p class="metric-description">Coherence of the translation</p>
                 </div>
+            </div>
+        </section>           
+            
+        <!-- Translation Output Section -->
+        <section class="section-card">
+            <h2>Translation & Analytic Quality Evaluation</h2>
+            <div>
+                <p>Read your translation below or you can download your translation here. <button class="buttons">Download</button></p>                    
+            </div>
+            <div class="translation-container">
+                <div></div>
+            </div>
+            <hr>
+            <div>
+                <h3>Analytic Quality Evaluation</h3>
+                <p><b>Instructions:</b> If you would be willing identify any errors you perceive in the translation, that would be of great help. Please highlight the error with your cursor, label the error according the error types listed in the table below, and leave an explanatory comment on the error. Your feedback will help us to improve our automatic translations over time.
+                <i>Note: We can only accept evaluations within the above editor pane at this time.</i></p>
+                <table style="table-layout: fixed; width: 100%">
+                    <tr>
+                        <th>Terminology</th>
+                        <th>Accuracy</th>
+                        <th>Linguistic conventions</th>
+                        <th>Style</th>
+                    </tr>
+                    <tr>
+                        <td>
+                            <ul>
+                                <li>Inconsistent with terminology resource</li>
+                                <li>Inconsistent use of terminology</li>
+                                <li>Overly consistent use of terminology</li>
+                                <li>Wrong term</li>
+                            </ul>
+                        </td>
+                        <td>
+                            <ul>
+                                <li>Mistranslation</li>
+                                <li>Overtranslation</li>
+                                <li>Undertranslation</li>
+                                <li>Addition</li>
+                                <li>Omission</li>
+                                <li>Should not have been translated</li>
+                                <li>Was not translated</li>
+                            </ul>
+                        </td>
+                        <td>
+                            <ul>
+                                <li>Grammar</li>
+                                <li>Punctuation</li>
+                                <li>Spelling</li>
+                                <li>Character encoding</li>
+                                <li>Textual conventions</li>
+                            </ul>
+                        </td>
+                        <td>
+                            <ul>
+                                <li>Organizational style</li>
+                                <li>Third-party style</li>
+                                <li>Inconsistent with external reference</li>
+                                <li>Language register</li>
+                                <li>Awkward style</li>
+                                <li>Unidiomatic style</li>
+                                <li>Inconsistent style</li>
+                            </ul>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>Locale conventions</th>
+                        <th>Audience appropriateness</th>
+                        <th>Design and markup</th>
+                        <th>Other</th>
+                    </tr>
+                        <td>
+                            <ul>
+                                <li>Number format</li>
+                                <li>Currency format</li>
+                                <li>Measurement format</li>
+                                <li>Time format</li>
+                                <li>Date format</li>
+                                <li>Address format</li>
+                                <li>Telephone format</li>
+                                <li>Shortcut key</li>
+                            </ul>
+                        </td>
+                        <td>
+                            <ul>
+                                <li>Cultural-specific reference</li>
+                                <li>Offensive</li>
+                            </ul>
+                        </td>
+                        <td>
+                            <ul>
+                                <li>Layout</li>
+                                <li>Markup tag</li>
+                                <li>Truncation</li>
+                                <li>Text expansion</li>
+                                <li>Missing text</li>
+                                <li>Link/cross-reference</li>
+                            </ul>
+                        </td>
+                        <td>
+                            <ul>
+                                <li>An error type not mentioned in this table; please leave a note in the comments section below letting us know what type of error it is.</li>
+                            </ul>
+                        </td>
+                    </tr>
+                </table>
+                <p><span style="background-color: yellow">Note: The error categories and types presented here follow the The MQM Core Typology. For definitions and examples, visit <a href="https://themqm.org/the-mqm-typology/">themqm.org</a>.</span></p>
             </div>
         </section>
 
-        <!-- User Feedback Section (Now properly separated) -->
-        <section class="section-card feedback-section">
-            <h2 class="section-title">Your Feedback on Quality</h2>
+        <!-- User Feedback Section -->
+        <section class="section-card">
+            <h2>Your Feedback on the Overall Quality of the Translation</h2>
+            <p>Given the specifications applied to the project.</p>
             <div class="feedback-container">
                 <div class="rating-grid">
                     <!-- Correspondence Rating -->
                     <div class="rating-section">
-                        <label class="rating-label">Correspondence (meaning accuracy)</label>
+                        <label class="rating-label">Correspondence (to the source text)</label>
                         <div class="rating-container">
                             <button class="rating-star" data-rating="1" aria-label="Rate 1 star">★</button>
                             <button class="rating-star" data-rating="2" aria-label="Rate 2 stars">★</button>
@@ -130,7 +405,7 @@
 
                     <!-- Readability Rating -->
                     <div class="rating-section">
-                        <label class="rating-label">Readability (fluency)</label>
+                        <label class="rating-label">Readability (as standalone content)</label>
                         <div class="rating-container">
                             <button class="rating-star" data-rating="1" aria-label="Rate 1 star">★</button>
                             <button class="rating-star" data-rating="2" aria-label="Rate 2 stars">★</button>
@@ -166,53 +441,6 @@
         <p>Corpus-Graph Document Translation Project - Licensed under AGPL-3.0</p>
     </footer>
 
-    <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            // Initialize rating system
-            const ratingContainers = document.querySelectorAll('.rating-container');
-            
-            ratingContainers.forEach(container => {
-                const stars = container.querySelectorAll('.rating-star');
-                let selectedRating = 0;
-
-                stars.forEach((star, index) => {
-                    // Hover effect
-                    star.addEventListener('mouseenter', () => {
-                        stars.forEach((s, i) => {
-                            if (i <= index) {
-                                s.classList.add('active');
-                            } else {
-                                s.classList.remove('active');
-                            }
-                        });
-                    });
-
-                    // Mouse leave - reset to selected rating
-                    container.addEventListener('mouseleave', () => {
-                        stars.forEach((s, i) => {
-                            if (i < selectedRating) {
-                                s.classList.add('active');
-                            } else {
-                                s.classList.remove('active');
-                            }
-                        });
-                    });
-
-                    // Click handler
-                    star.addEventListener('click', () => {
-                        selectedRating = index + 1;
-                        stars.forEach((s, i) => {
-                            if (i < selectedRating) {
-                                s.classList.add('active');
-                            } else {
-                                s.classList.remove('active');
-                            }
-                        });
-                    });
-                });
-            });
-        });
-    </script>
-    <script src="js/translation-interface.js"></script>
+    <script src="frontend/js/translation-interface.js"></script>
 </body>
 </html>
