@@ -1,35 +1,57 @@
-# corpus-graph-document-translation
-Corpus informed, graph-based document-level translation
-
 # Corpus-Graph Document Translation
+Corpus informed, graph-based document-level translation
 
 ## Overview
 This project investigates potential improvements to machine translation by combining three approaches:
 - Corpus-informed translation using domain-specific monolingual corpora
 - Graph-based translation leveraging terminological knowledge graphs
-- Document-level translation moving beyond traditional sentence segmentation
+- Document-level translation based upon specifications that moves beyond traditional sentence segmentation
 
 ## Project Goals
 - Explore whether domain-specific corpora in translation/localization can improve translation quality
 - Test if terminological knowledge graphs can enhance consistency and accuracy
-- Move beyond sentence-level segmentation to enable more natural expression in target languages
-- Develop evaluation methodologies to assess translation improvements
+- Test if automatic translation systems can be trained to customize translation output to project specifications
+- Move beyond sentence-level segmentation to a whole document (whole context) based approach to enable more natural expression in target languages
+- Integrate standards-based evaluation methodologies to assess translation improvements
 
 ## Project Structure
-- `/frontend` - User interface implementation
-- `/backend` - LangChain translation pipeline
-- `/evaluation` - Translation quality assessment tools
-- `/data` - Corpora and knowledge graph data
-- `/docs` - Project documentation
+
+```
+corpus-graph-document-translation/
+├── backend/
+│   ├── .env # Environment variables file (not tracked by git)
+│   ├── app/
+│   │   ├── __init__.py
+│   │   ├── database.py           # MongoDB connection setup
+│   │   ├── models.py
+│   │   └── routers/
+│   │       ├── __init__.py
+│   │       └── documents.py      # API endpoints
+│   └── main.py                   # FastAPI app entry point
+├── frontend/                     # GitHub Pages implementation
+│   ├── css/
+│   ├── js/
+├── index.html                    
+├── .gitignore                    # Excludes backend/.env
+├── LICENSE
+└── README.md                     # Explain GCP usage here
+```
 
 ## Current Status
-This project is in early experimental stages. The implementation will progress as follows:
-1. Frontend development (HTML/CSS/JavaScript/React)
-2. Backend integration with LangChain
-3. Corpus and knowledge graph integration
-4. Evaluation methodology implementation
+This project is in early developmental stages. The implementation will progress as follows:
+1. Corpora integration
+- MongoDB Atlas
+- Python FastAPI backend
+- Backend deployed to cloud platform (such as Railway)
+2. Ongoing frontend development (HTML/CSS/JavaScript/React)
+3. Knowledge graph integration
+4. Backend integration with LangChain
+5. Evaluation methodology implementation
 
 ## Research Context
+Traditional machine translation and Computer-Assisted Translation (CAT) tools typically process text segment by segment. This project explores whether considering broader document context, combined with domain-specific knowledge, can produce more natural and accurate translations.
+
+## Standards-Based Approach
 Traditional machine translation and Computer-Assisted Translation (CAT) tools typically process text segment by segment. This project explores whether considering broader document context, combined with domain-specific knowledge, can produce more natural and accurate translations.
 
 ## Installation & Usage
