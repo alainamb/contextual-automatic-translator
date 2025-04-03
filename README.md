@@ -58,7 +58,7 @@ Traditional machine translation and Computer-Assisted Translation (CAT) tools ty
 
 ### Google Cloud Project (GCP)
 **Name**: Corpora Graph Auto Translation
-Buckets
+**Buckets**
 - auto-translator-corpora
 
 **auto-translator-corpora bucket: directory structure**
@@ -79,6 +79,13 @@ auto-translator-corpora/
 ├── tl/ # Translation & Localization corpora
 │   └── [Similar structure]
 ```
+
+### MongoDB Atlas
+**Cluster name**: Auto-Translator
+**Databases**
+- Auto-Translator
+  - Collections
+    - document_metadata
 
 [To be developed as additional components are developed]
 
