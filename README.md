@@ -55,7 +55,32 @@ Traditional machine translation and Computer-Assisted Translation (CAT) tools ty
 Traditional machine translation and Computer-Assisted Translation (CAT) tools typically process text segment by segment. This project explores whether considering broader document context, combined with domain-specific knowledge, can produce more natural and accurate translations.
 
 ## Installation & Usage
-[To be added as components are developed]
+
+### Google Cloud Project (GCP)
+**Name**: Corpora Graph Auto Translation
+Buckets
+- auto-translator-corpora
+
+**auto-translator-corpora bucket: directory structure**
+
+```
+auto-translator-corpora/
+├── gai/ # Generative AI corpora
+│   ├── en-intl/ # English content in variants besides U.S. English
+│   │   ├── metadata/
+│   │   ├── processed/
+│   │   └── submissions/
+│   ├── en-us/ # Prioritized English content
+│   │   └── [Similar structure]
+│   ├── es-intl/ # Spanish content in variants besides LATAM Spanish
+│   │   └── [Similar structure]
+│   ├── en-latam/ # Prioritized; Subfolders to be created as needed
+│   │   └── [Similar structure]
+├── tl/ # Translation & Localization corpora
+│   └── [Similar structure]
+```
+
+[To be developed as additional components are developed]
 
 ## Contributing
 Contributions and feedback are welcome. Please feel free to submit issues and pull requests.
