@@ -2,13 +2,14 @@
 Corpus informed, graph-based document-level translation
 
 ## Overview
-This project investigates potential improvements to machine translation by combining three approaches:
+This project investigates potential improvements to machine translation by combining these approaches:
 - Corpus-informed translation using domain-specific monolingual corpora
 - Graph-based translation leveraging terminological knowledge graphs
-- Document-level translation based upon specifications that moves beyond traditional sentence segmentation
+- Specifications-based automatic translation with customized outputs depending on audience, purpose, etc.
+- Document-level translation that moves beyond the traditional sentence segmentation approach
 
 ## Project Goals
-- Explore whether domain-specific corpora in translation/localization can improve translation quality
+- Explore whether domain-specific corpora can improve translation quality
 - Test if terminological knowledge graphs can enhance consistency and accuracy
 - Test if automatic translation systems can be trained to customize translation output to project specifications
 - Move beyond sentence-level segmentation to a whole document (whole context) based approach to enable more natural expression in target languages
@@ -21,12 +22,14 @@ corpus-graph-document-translation/
 ├── backend/
 │   ├── .env # Environment variables file (not tracked by git)
 │   ├── app/
-│   │   ├── __init__.py
-│   │   ├── database.py           # MongoDB connection setup
-│   │   ├── models.py
+│   │   ├── experiments/
+│   │       └── clustering # Python for testing clustering algorithms to be integrated into similarity scoring among documents
 │   │   └── routers/
 │   │       ├── __init__.py
 │   │       └── documents.py      # API endpoints
+│   │   ├── __init__.py
+│   │   ├── database.py           # MongoDB connection setup
+│   │   ├── models.py
 │   └── main.py                   # FastAPI app entry point
 ├── frontend/                     # GitHub Pages implementation
 │   ├── css/
@@ -52,9 +55,26 @@ This project is in early developmental stages. The implementation will progress 
 Traditional machine translation and Computer-Assisted Translation (CAT) tools typically process text segment by segment. This project explores whether considering broader document context, combined with domain-specific knowledge, can produce more natural and accurate translations.
 
 ## Standards-Based Approach
-Traditional machine translation and Computer-Assisted Translation (CAT) tools typically process text segment by segment. This project explores whether considering broader document context, combined with domain-specific knowledge, can produce more natural and accurate translations.
 
-## Installation & Usage
+**Language Code Standardization** 
+The ISO 639-2 standard (two-letter codes) provides codes for 400-500 languages, while ISO 639-3 (three-letter codes) supports over 7,600 distinct language identifiers. This project proactively adopts ISO 639-3 three-letter language codes.
+
+This expansion is crucial because:
+   - Supports more granular language variant representation
+   - Prepares for comprehensive global language coverage
+     * Enables precise linguistic variant specification
+     * Supports emerging and minority language documentation
+
+**Quality Evaluation Standards**
+This project incorporates translation quality evaluation methodologies outlined in two forthcoming ASTM F43 standards:
+- The MQM core typology for identifying individual errors within automatic translation outputs
+- The HQuest axes of correspondence and readability for rating the quality of the translation as a whole document
+
+## Technical Stack
+- Frontend: HTML5, CSS3, JavaScript, React
+- Backend: Python, LangChain, FastAPI
+- Data Management: Google Cloud Project, MongoDB Atlas
+- Deployment: Railway
 
 ### Google Cloud Project (GCP)
 **Name**: Corpora Graph Auto Translation
@@ -89,6 +109,7 @@ auto-translator-corpora/
   - Collections
     - document_metadata
 
+## Installation & Usage
 [To be developed as additional components are developed]
 
 ## Contributing
