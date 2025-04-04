@@ -19,6 +19,8 @@ class PyObjectId(ObjectId):
     def __modify_schema__(cls, field_schema):
         field_schema.update(type="string")
 
+# Eventually knowledge graphs can be created from this schema. Can we add reference fields for graph connections now? We could include fields that store IDs of related entities... Or we could also just make note in a logical place in this file that eventually knowledge graph IDs can be added in
+
 # Vector and Section models
 class DocumentVector(BaseModel):
     """Represents a vector embedding for a document or section"""
@@ -46,12 +48,28 @@ class DocumentSection(BaseModel):
         arbitrary_types_allowed = True
 
 # Author models
+
+# LANGUAGE VARIATION AND AUTHOR LOCATION DATA
+# We collect detailed information about authors' countries of origin, nationality, 
+# and residence history to account for linguistic nuance in our corpus.
+# Rationale:
+# 1. Authors often exhibit hybrid language patterns influenced by their migration history
+#    (e.g., a Venezuelan who has lived in Mexico for 10 years may write in a 
+#    hybrid Venezuelan/Mexican Spanish variant)
+# 2. This data helps us better understand dialectal variations within language families
+# 3. It allows for more accurate document attribution and context-sensitive translation
+# 4. It supports research on how geography influences language patterns and terminology
+# 5. This information is crucial for training translation models sensitive to regional variations
+
 class AuthorDemographics(BaseModel):
     """Demographic information about an author"""
-    nationality: Optional[str] = None
-    race: Optional[str] = None
-    ethnicity: Optional[str] = None
-    gender: Optional[str] = None # "non-binary", "female", "male" - should "female" and "male" be broken into "transgender" and "cisgender" options?
+    author_country_of_origin: Optional[str] = None  # The country where the author was born/raised
+    current_country_of_residence: Optional[str] = None  # Where the author currently lives
+    previous_countries: Optional[List[Dict[str, Union[str, int]]]] = None  # Previous residences
+    nationalities: Optional[List[str]] = None
+    races: Optional[List[str]] = None
+    ethnicities: Optional[List[str]] = None
+    gender: Optional[str] = None  # Options include "non-binary", "transgender female", "transgender male", "cisgender female", "cisgender male"
     sexual_orientation: Optional[str] = None
 
 class PersonAuthor(BaseModel):
@@ -69,12 +87,15 @@ class OrganizationAuthor(BaseModel):
     """Information about an organization as an author"""
     institution_name: str
     institution_type: Optional[str] = None
-    country: Optional[str] = None
+    organization_country_of_origin: Optional[str] = None  # Where the organization was founded
+    current_headquarters_country: Optional[str] = None  # Current headquarters location
 
 # Document similarity tracking
 class DocumentSimilarity(BaseModel):
-    source_doc_id: PyObjectId
-    target_doc_id: PyObjectId
+    source_doc_id: PyObjectId # MongoDB ObjectId 
+    target_doc_id: PyObjectId # MongoDB ObjectId 
+    source_content_hash: Optional[str] = None  # Content-based hash of source document - Source needs to be updated here so as to not confuse this word with how "source" is used in the field of translation; below     content_hash: str  # Your application's content-based hash identifier ; can "content_hash" just be used in two places? Here source_content_hash refers to the document in question that is being recorded no?
+    target_content_hash: Optional[str] = None  # Content-based hash of target document - Target needs to be updated here so as to not confuse this word with how "target" is used in the field of translation
     similarity_score: float
     vector_type: str  # "document" or "section"
     section_pair: Optional[Dict[str, str]] = None  # Maps source section_id to target section_id
@@ -86,9 +107,12 @@ class DocumentSimilarity(BaseModel):
 
 # Main Document Metadata model
 class DocumentMetadata(BaseModel):
-    id: Optional[PyObjectId] = Field(default_factory=PyObjectId, alias="_id")
+    id: Optional[PyObjectId] = Field(default_factory=PyObjectId, alias="_id")  # MongoDB's internal ID
+    content_hash: str  # Your application's content-based hash identifier
+    original_filename: str  # The original filename as uploaded by the user
     title: str
-    document_type: str  # "person_authored", "organization_authored", or "mixed_authorship"
+    authorship_type: str  # "person_authored", "organization_authored", or "mixed_authorship"
+    document_country_of_origin: Optional[str] = None  # Where the document was initially created/written
     
     # Shared fields
     ## Administrative information
@@ -98,61 +122,74 @@ class DocumentMetadata(BaseModel):
     ## Document routing information
     corpora: str # "tl (translation & localization)", "gai", "usmex (U.S.-Mexico relations)"
     language_family: str  # ISO 639-3 (e.g., "spa", "eng")
-    language_variant: str # ISO 3166-1 alpha-3 (e.g., "MEX", "USA")
+    language_variant: str # ISO 3166-1 alpha-3 (e.g., "MEX", "USA") - Content in English not from the USA routed to the en-intl corpus folder; Content from countries in Latin America where Spanish is the main language routed to LATAM corpus, all other Spanish content is routed to es-intl folder
 
-    ## Purpose of this information?
-    # category: str # To be incorporated once categories within the corpora have been identified by clustering algorithms
-    keywords: List[str] = [] # Could this be generated by clustering algorithms?
-    summary: Optional[str] = None # Is this necessary? Does this aid in genAI processing? Is this helpful for human understanding?
+    ## What would be a good title to give to this section to denote the purpose of the category, keywords, and summary fields?
+    category: Optional[str] = None  # Initially empty - to be populated by clustering algorithms later
+    keywords: List[str] = [] # Can be generated or manually provided - Let's build in functionality to generate this automatically
+    summary: Optional[str] = None # Aids in AI processing, searching, and human understanding - Let's build in functionality to generate this automatically
 
     ## Specifications - matches translation specifications in UI
-    text_type: str # "journal article", "book chapter", "case study", "blog post", "essay", "FAQ", "policy", "press release", "report", "review", "tutorial", "translation" - Translations automatically rejected from corpus in keeping with best practices for special language corpora formation
-    purpose: str # "informational", "persuasive", "philosophical", "entertainment"
+    text_type: str # Translations automatically rejected from corpus in keeping with best practices for special language corpora formation
+    purpose: str 
     point_of_view: str
-    audience: Optional[str] = None
-    reach: Optional[str] = None 
-    word_count: Optional[int] = None # Approximate value calculated from txt files once those have been created; used to measure the reliability of the corpus in terms of word count - for special language corpora, a starter word count of 100,000 is recommended
-    
-    # Content storage
-    content_text: Optional[str] = None  # The full text content 
-    file_path: str  # Path to processed text file
-    original_file_path: Optional[str] = None  # Path to original document
-    content_url: Optional[str] = None  # URL if content is linked rather than uploaded
-    corpus_path: Optional[str] = None  # e.g., "tl/en-US/processed/Smith_TranslationQuality_2022.txt"
-    
-    # Document structure
-    sections: Optional[List[DocumentSection]] = None
-    
-    # Vector embeddings for the whole document
-    vectors: Optional[List[DocumentVector]] = None
-    
-    # For knowledge graph connections
-    entity_references: Optional[Dict[str, List[str]]] = None  # Entity type -> list of entity IDs
-    
-    # Publication info
-    publication_year: Optional[int] = None
-    publisher: Optional[str] = None
-    # place_of_publication: Optional[str] = None # No longer required in citations - just APA and Chicago, or also MLA?
-    
-    # Book info if applicable
+    audience: str
+    reach: str
+    word_count: str # Approximate value calculated from txt files once those have been created; used to measure the reliability of the corpus in terms of word count - for special language corpora, a starter word count of 100,000 is recommended
+
+    ## Book info if applicable
     book_title: Optional[str] = None
     editors: Optional[List[str]] = []
     translators: Optional[List[str]] = [] # Should translator information go closer to the top?
-    # page_range_start: # No longer required in citations - just APA and Chicago, or also MLA?
-    # page_range_finish: # No longer required in citations - just APA and Chicago, or also MLA?
 
-    # Journal info if applicable
+    ## Journal info if applicable
     journal_title: Optional[str] = None
+
+    ## Magazine info if applicable
+    magazine_title: Optional[str] = None
+
+    ## Publication info
+    publication_year: Optional[int] = None
+    publisher: Optional[str] = None
+
+    ## Citation information (supporting multiple standards)
+    place_of_publication: Optional[str] = None  # Retained for comprehensive citation support
+    page_range_start: Optional[int] = None  # Retained for comprehensive citation support
+    page_range_end: Optional[int] = None  # Retained for comprehensive citation support
+    citation_formats: Optional[Dict[str, str]] = None  # Can store pre-formatted citations in different styles
+    
+    # Content storage
+    # Why are these marked as optional?
+    original_file_path: str  # Path to original unprocessed document
+    processed_file_path: str  # Path to processed text file for vector generation
+    corpus_path: str  # e.g., "tl/en-US/processed/Smith_TranslationQuality_2022.txt" - Isn't this a redundant item with "processed_file_path"? Is this needed?
+    content_text: Optional[str] = None  # The full text content
+    # Optional for performance reasons with large documents
+    content_url: Optional[str] = None  # Optional, only for linked rather than uploaded content
+
+    # Document structure
+    # How is this part of the file supposed to work?
+    sections: Optional[List[DocumentSection]] = None # Sections of the document, required even if just one section
+    
+    # Vector embeddings
+    document_vector: Optional[DocumentVector] = None  # Vector for the entire document
+    section_vectors: Optional[List[DocumentVector]] = None  # Vectors for individual sections
+    
+    # For knowledge graph connections
+    entity_references: Optional[Dict[str, List[str]]] = None  # Entity type -> list of entity IDs
     
     # Author information - organizations or people or both
     person_authors: Optional[List[PersonAuthor]] = None
     organization_authors: Optional[List[OrganizationAuthor]] = None
     
     # Metadata about the submission itself
+    # Wouldn't it be logical for this information to be presented above the content storage section?
     contributor: str  # Person submitting this content
     created_at: datetime = Field(default_factory=datetime.utcnow)
     updated_at: datetime = Field(default_factory=datetime.utcnow)
+    notes: Optional[str] = None  # Additional information provided by the contributor
     
+    # This example part needs to be updated once we've finalized the schema above
     class Config:
         allow_population_by_field_name = True
         arbitrary_types_allowed = True
@@ -160,7 +197,7 @@ class DocumentMetadata(BaseModel):
         schema_extra = {
             "example": {
                 "title": "Translation Quality Metrics",
-                "document_type": "person_authored",
+                "authorship_type": "person_authored",
                 "status": "validated",
                 "permission": "publicly_available",
                 "language_family": "eng",
@@ -243,10 +280,11 @@ class DocumentMetadata(BaseModel):
         }
 
 # For response models (without certain fields)
+# What is this part for?
 class DocumentMetadataResponse(BaseModel):
     id: str = Field(..., alias="_id")
     title: str
-    document_type: str
+    authorship_type: str
     status: str
     language_family: str
     category: Optional[str] = None
