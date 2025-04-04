@@ -1,0 +1,7 @@
+sentence-transformers
+scikit-learn
+scipy
+matplotlib
+pandas
+pymongo
+python-dotenv

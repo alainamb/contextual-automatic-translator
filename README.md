@@ -58,6 +58,7 @@ Traditional machine translation and Computer-Assisted Translation (CAT) tools ty
 
 ### Google Cloud Project (GCP)
 **Name**: Corpora Graph Auto Translation
+
 **Buckets**
 - auto-translator-corpora
 
@@ -82,6 +83,7 @@ auto-translator-corpora/
 
 ### MongoDB Atlas
 **Cluster name**: Auto-Translator
+
 **Databases**
 - Auto-Translator
   - Collections

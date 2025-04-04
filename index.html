@@ -8,13 +8,13 @@
 </head>
 <body>
     <header class="header">
-        <nav class="nav-container">
+        <nav class="nav-container"> <!-- Turn navigational menu into React component -->
             <h1 class="nav-title">Corpus-Graph Document Translation</h1>
             <div class="nav-items">
-                <button class="nav-item">Translation</button>
-                <button class="nav-item">Reporting</button>
-                <button class="nav-item">About</button>
-                <button class="nav-item">References</button>
+                <a href="#" class="nav-item">Translation</a>
+                <a href="#" class="nav-item">Reporting</a>
+                <a href="#" class="nav-item">About</a>
+                <a href="/frontend/references.html" class="nav-item">References</a>
             </div>
         </nav>
     </header>
@@ -62,9 +62,9 @@
                                 <td style="width: 40%">Language variant</td>
                                 <td style="width: 60%"> 
                                     <select name="langVariant" id="langVariant">
-                                        <option value="1">Spanish for Mexico</option>
-                                        <option value="2">Spanish for Latin America</option>
-                                        <option value="3" selected>English for the United States</option>
+                                        <option value="eng-USA" selected>English - United States</option>
+                                        <option value="spa-MEX">Spanish - Mexico</option>
+                                        <option value="spa-LAT">Spanish - Latin America</option>
                                     </select>
                                 </td>
                             </tr>
@@ -72,18 +72,34 @@
                                 <td>Text type</td>
                                 <td>
                                     <select name="textType" id="textType">
-                                        <option value="1">Journal article</option>
-                                        <option value="2">Book chapter</option>
-                                        <option value="3">Case study</option>
+                                        <option value="1">Academic paper</option>
+                                        <option value="2">Advertisement</option>
+                                        <option value="3">App/Website content</option>
                                         <option value="4">Blog post</option>
-                                        <option value="5" selected>Essay</option>
-                                        <option value="6">FAQ</option>
-                                        <option value="7">Policy</option>
-                                        <option value="8">Press release</option>
-                                        <option value="9">Report</option>
-                                        <option value="10">Review</option>
-                                        <option value="11">Tutorial</option>
-                                        <option value="11">Translation</option>
+                                        <option value="5">Book chapter</option>
+                                        <option value="6">Case study</option>
+                                        <option value="7">Contract/Legal document</option>
+                                        <option value="8">Documentation</option>
+                                        <option value="9">Email</option>
+                                        <option value="10" selected>Essay</option>
+                                        <option value="11">FAQ</option>
+                                        <option value="12">Journal article</option>
+                                        <option value="13">Manual/Guide</option>
+                                        <option value="14">Marketing material</option>
+                                        <option value="15">News article</option>
+                                        <option value="16">Policy</option>
+                                        <option value="17">Press release</option>
+                                        <option value="18">Product description</option>
+                                        <option value="19">Report</option>
+                                        <option value="20">Research proposal</option>
+                                        <option value="21">Review</option>
+                                        <option value="22">Script</option>
+                                        <option value="23">Social media post</option>
+                                        <option value="24">Subtitles/Captions</option>
+                                        <option value="25">Technical specification</option>
+                                        <option value="26">Translation</option>
+                                        <option value="27">Tutorial</option>
+                                        <option value="28">White paper</option>
                                     </select>
                                 </td>
                             </tr>
@@ -91,10 +107,11 @@
                                 <td>Purpose</td>
                                 <td>
                                     <select name="purpose" id="purpose">
-                                        <option value="1">Informational</option>
-                                        <option value="2" selected>Persuasive</option>
-                                        <option value="3">Philosophical</option>
-                                        <option value="4">Entertainment</option>
+                                        <option value="1">Entertainment</option>
+                                        <option value="2">Informational</option>
+                                        <option value="3" selected>Persuasive</option>
+                                        <option value="4">Philosophical</option>
+                                        <option value="5">Religious</option>
                                     </select>
                                 </td>
                             </tr>
@@ -102,35 +119,49 @@
                                 <td>Point of view</td>
                                 <td>
                                     <select name="pov" id="pov">
-                                        <option value="1">Subject matter expert</option>
-                                        <option value="2">Technical writer</option>
-                                        <option value="3">Content creator</option>
-                                        <option value="4">Researcher</option>
-                                        <option value="5">Grant writer</option>
-                                        <option value="6">Policy analyst</option>
-                                        <option value="7" selected>Copywriter</option>
-                                        <option value="8">Proposal writer</option>
-                                        <option value="9">Academic</option>
-                                        <option value="10">Reporter</option>
+                                        <option value="1">Academic</option>
+                                        <option value="2">Content creator</option>
+                                        <option value="3" selected>Copywriter</option>
+                                        <option value="4">Documentation specialist</option>
+                                        <option value="5">General public</option>
+                                        <option value="6">Grant writer</option>
+                                        <option value="7">Legal professional</option>
+                                        <option value="8">Marketing specialist</option>
+                                        <option value="9">Policy analyst</option>
+                                        <option value="10">Proposal writer</option>
+                                        <option value="11">Reporter</option>
+                                        <option value="12">Researcher</option>
+                                        <option value="13">Student</option>
+                                        <option value="14">Subject matter expert</option>
+                                        <option value="15">Technical writer</option>
                                     </select>
                                 </td>
-                            </tr>
                             <tr>
                                 <td>Audience</td>
                                 <td>
                                     <select name="audience" id="audience">
-                                        <option value="1">Technical</option>
+                                        <option value="1">Academic</option>
                                         <option value="2">Business</option>
-                                        <option value="3">Academic</option>
-                                        <option value="4">Professional</option>
-                                        <option value="5">Regulatory</option>
-                                        <option value="6">General public</option>
-                                        <option value="7">Internal</option>
-                                        <option value="8" selected>Clients</option>
-                                        <option value="9">Investors</option>
-                                        <option value="10">Media</option>
-                                        <option value="11">Policy makers</option>
-                                        <option value="12">Subject matter experts</option>
+                                        <option value="3">Children/Youth</option>
+                                        <option value="4">Clients (B2B)</option>
+                                        <option value="5">Developers</option>
+                                        <option value="6">Educators</option>
+                                        <option value="7">General public</option>
+                                        <option value="8">Government</option>
+                                        <option value="9">Healthcare professionals</option>
+                                        <option value="10">Internal</option>
+                                        <option value="11">Investors</option>
+                                        <option value="12">Legal professionals</option>
+                                        <option value="13">Media</option>
+                                        <option value="14">Patients/Consumers</option>
+                                        <option value="15">Policy makers</option>
+                                        <option value="16">Professional</option>
+                                        <option value="17">Regulatory</option>
+                                        <option value="18">Researchers</option>
+                                        <option value="19">Students</option>
+                                        <option value="20">Subject matter experts</option>
+                                        <option value="21">Technical</option>
+                                        <option value="22" selected>Users/Customers</option>
                                     </select>
                                 </td>
                             </tr>
@@ -138,12 +169,15 @@
                                 <td>Reach</td>
                                 <td>
                                     <select name="reach" id="reach">
-                                        <option value="1">Global</option>
-                                        <option value="2" selected>Regional</option>
-                                        <option value="3">Local</option>
-                                        <option value="4">Organizational wide</option>
+                                        <option value="1">Cross-organizational</option>
+                                        <option value="2">For informational purposes only</option>
+                                        <option value="3">Global</option>
+                                        <option value="4">Industry-specific</option>
                                         <option value="5">Internal team</option>
-                                        <option value="6">For informational puposes only</option>
+                                        <option value="6">Local</option>
+                                        <option value="7">National</option>
+                                        <option value="8">Organization-wide</option>
+                                        <option value="9" selected>Regional</option>
                                     </select>
                                 </td>
                             </tr>
@@ -157,23 +191,28 @@
                                 <td style="width: 40%">Language variant</td>
                                 <td style="width: 60%"> 
                                     <select name="langVariant" id="langVariant">
-                                        <option value="1">Spanish for Mexico</option>
-                                        <option value="2">Spanish for Latin America</option>
-                                        <option value="3">English for the United States</option>
+                                        <option value="eng-USA" selected>English - United States</option>
+                                        <option value="spa-MEX">Spanish - Mexico</option>
+                                        <option value="spa-LAT">Spanish - Latin America</option>
                                     </select>
                                 </td>
                             </tr>
                             <tr>
-                                <td>Text type</td>
+                                <td>Translation type</td>
                                 <td>
-                                    <select name="textType" id="textType">
-                                        <option value="1">Localization</option>
-                                        <option value="2">Conventional translation</option>
-                                        <option value="3">Literal translation</option>
-                                        <option value="4">Back translation</option>
-                                        <option value="5">Transcreation</option>
-                                        <option value="6">Summary</option>
-                                        <option value="7">Gisting</option>
+                                    <select name="translationType" id="translationType">
+                                        <option value="1">Adaptation</option>
+                                        <option value="2">Back translation</option>
+                                        <option value="3">Conventional translation</option>
+                                        <option value="4">Cultural localization</option>
+                                        <option value="5">Gisting (quick understanding)</option>
+                                        <option value="6">Functional localization</option>
+                                        <option value="7">Literal translation</option>
+                                        <option value="8">MT post-editing (light)</option>
+                                        <option value="9">MT post-editing (full)</option>
+                                        <option value="10">Summary translation</option>
+                                        <option value="11">Technical localization</option>
+                                        <option value="12">Transcreation</option>
                                     </select>
                                 </td>
                             </tr>
@@ -181,10 +220,11 @@
                                 <td>Purpose</td>
                                 <td>
                                     <select name="purpose" id="purpose">
-                                        <option value="1">Informational</option>
-                                        <option value="2">Persuasive</option>
-                                        <option value="3">Philosophical</option>
-                                        <option value="4">Entertainment</option>
+                                        <option value="1">Entertainment</option>
+                                        <option value="2">Informational</option>
+                                        <option value="3" selected>Persuasive</option>
+                                        <option value="4">Philosophical</option>
+                                        <option value="5">Religious</option>
                                     </select>
                                 </td>
                             </tr>
@@ -192,16 +232,21 @@
                                 <td>Point of view</td>
                                 <td>
                                     <select name="pov" id="pov">
-                                        <option value="1">Subject matter expert</option>
-                                        <option value="2">Technical writer</option>
-                                        <option value="3">Content creator</option>
-                                        <option value="4">Researcher</option>
-                                        <option value="5">Grant writer</option>
-                                        <option value="6">Policy analyst</option>
-                                        <option value="7">Copywriter</option>
-                                        <option value="8">Proposal writer</option>
-                                        <option value="9">Academic</option>
-                                        <option value="10">Reporter</option>
+                                        <option value="1">Academic</option>
+                                        <option value="2">Content creator</option>
+                                        <option value="3" selected>Copywriter</option>
+                                        <option value="4">Documentation specialist</option>
+                                        <option value="5">General public</option>
+                                        <option value="6">Grant writer</option>
+                                        <option value="7">Legal professional</option>
+                                        <option value="8">Marketing specialist</option>
+                                        <option value="9">Policy analyst</option>
+                                        <option value="10">Proposal writer</option>
+                                        <option value="11">Reporter</option>
+                                        <option value="12">Researcher</option>
+                                        <option value="13">Student</option>
+                                        <option value="14">Subject matter expert</option>
+                                        <option value="15">Technical writer</option>
                                     </select>
                                 </td>
                             </tr>
@@ -209,18 +254,28 @@
                                 <td>Audience</td>
                                 <td>
                                     <select name="audience" id="audience">
-                                        <option value="1">Technical</option>
+                                        <option value="1">Academic</option>
                                         <option value="2">Business</option>
-                                        <option value="3">Academic</option>
-                                        <option value="4">Professional</option>
-                                        <option value="5">Regulatory</option>
-                                        <option value="6">General public</option>
-                                        <option value="7">Internal</option>
-                                        <option value="8">Clients</option>
-                                        <option value="9">Investors</option>
-                                        <option value="10">Media</option>
-                                        <option value="11">Policy makers</option>
-                                        <option value="12">Subject matter experts</option>
+                                        <option value="3">Children/Youth</option>
+                                        <option value="4">Clients (B2B)</option>
+                                        <option value="5">Developers</option>
+                                        <option value="6">Educators</option>
+                                        <option value="7">General public</option>
+                                        <option value="8">Government</option>
+                                        <option value="9">Healthcare professionals</option>
+                                        <option value="10">Internal</option>
+                                        <option value="11">Investors</option>
+                                        <option value="12">Legal professionals</option>
+                                        <option value="13">Media</option>
+                                        <option value="14">Patients/Consumers</option>
+                                        <option value="15">Policy makers</option>
+                                        <option value="16">Professional</option>
+                                        <option value="17">Regulatory</option>
+                                        <option value="18">Researchers</option>
+                                        <option value="19">Students</option>
+                                        <option value="20">Subject matter experts</option>
+                                        <option value="21">Technical</option>
+                                        <option value="22" selected>Users/Customers</option>
                                     </select>
                                 </td>
                             </tr>
@@ -228,12 +283,15 @@
                                 <td>Reach</td>
                                 <td>
                                     <select name="reach" id="reach">
-                                        <option value="1">Global</option>
-                                        <option value="2">Regional</option>
-                                        <option value="3">Local</option>
-                                        <option value="4">Organizational wide</option>
+                                        <option value="1">Cross-organizational</option>
+                                        <option value="2">For informational purposes only</option>
+                                        <option value="3">Global</option>
+                                        <option value="4">Industry-specific</option>
                                         <option value="5">Internal team</option>
-                                        <option value="6">For informational puposes only</option>
+                                        <option value="6">Local</option>
+                                        <option value="7">National</option>
+                                        <option value="8">Organization-wide</option>
+                                        <option value="9" selected>Regional</option>
                                     </select>
                                 </td>
                             </tr>
