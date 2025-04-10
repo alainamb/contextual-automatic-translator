@@ -2,6 +2,8 @@ from pydantic import BaseModel, Field
 from typing import List, Optional, Dict, Any, Union
 from datetime import datetime
 from bson import ObjectId
+from typing import Optional, List, Dict, Any, Union
+from datetime import datetime
 
 # Helper for working with MongoDB ObjectIDs in Pydantic
 class PyObjectId(ObjectId):
@@ -18,8 +20,6 @@ class PyObjectId(ObjectId):
     @classmethod
     def __modify_schema__(cls, field_schema):
         field_schema.update(type="string")
-
-# Eventually knowledge graphs can be created from this schema. Can we add reference fields for graph connections now? We could include fields that store IDs of related entities... Or we could also just make note in a logical place in this file that eventually knowledge graph IDs can be added in
 
 # Vector and Section models
 class DocumentVector(BaseModel):
@@ -79,6 +79,8 @@ class PersonAuthor(BaseModel):
     first_name: str
     demographics: Optional[AuthorDemographics] = None
     is_primary: bool = False  # Indicates if this is the primary author
+    is_translator: bool = False  # Indicates if the author is the translator of a work
+    # As a general rule, translations should not be included in a great number in a corpus
     
     class Config:
         arbitrary_types_allowed = True
@@ -89,13 +91,16 @@ class OrganizationAuthor(BaseModel):
     institution_type: Optional[str] = None
     organization_country_of_origin: Optional[str] = None  # Where the organization was founded
     current_headquarters_country: Optional[str] = None  # Current headquarters location
+    is_primary: bool = False  # Indicates if this is the primary author
+    is_translator: bool = False  # Indicates if the author is the translator of a work
+    # As a general rule, translations should not be included in a great number in a corpus
 
 # Document similarity tracking
 class DocumentSimilarity(BaseModel):
     source_doc_id: PyObjectId # MongoDB ObjectId 
     target_doc_id: PyObjectId # MongoDB ObjectId 
-    source_content_hash: Optional[str] = None  # Content-based hash of source document - Source needs to be updated here so as to not confuse this word with how "source" is used in the field of translation; below     content_hash: str  # Your application's content-based hash identifier ; can "content_hash" just be used in two places? Here source_content_hash refers to the document in question that is being recorded no?
-    target_content_hash: Optional[str] = None  # Content-based hash of target document - Target needs to be updated here so as to not confuse this word with how "target" is used in the field of translation
+    source_content_hash: Optional[str] = None  # REVISION Content-based hash of source document - Source needs to be updated here so as to not confuse this word with how "source" is used in the field of translation; below     content_hash: str  # Your application's content-based hash identifier ; can "content_hash" just be used in two places? Here source_content_hash refers to the document in question that is being recorded no?
+    target_content_hash: Optional[str] = None  # REVISION Content-based hash of target document - Target needs to be updated here so as to not confuse this word with how "target" is used in the field of translation
     similarity_score: float
     vector_type: str  # "document" or "section"
     section_pair: Optional[Dict[str, str]] = None  # Maps source section_id to target section_id
@@ -115,32 +120,38 @@ class DocumentMetadata(BaseModel):
     document_country_of_origin: Optional[str] = None  # Where the document was initially created/written
     
     # Shared fields
-    ## Administrative information
-    status: str  # "new", "validated", "deprecated", "rejected"
+    ## Status tracking
     permission: str # "publicly available", "permission obtained from primary author", "permission obtained from publisher", "permission not obtained - for private collection"
+    status: str  # "new", "validated", "deprecated", "rejected"
+    status_change_history: List[Dict[str, Union[str, datetime]]] = Field(
+        default_factory=list
+    )  # Track status changes with timestamps and reasons
+    rejection_reason: Optional[str] = None  # Explanation if rejected
+    deprecation_reason: Optional[str] = None  # Explanation if deprecated
+    validation_notes: Optional[str] = None  # Notes from validation process
+    validator_id: Optional[str] = None  # Person who performed validation
 
     ## Document routing information
     corpora: str # "tl (translation & localization)", "gai", "usmex (U.S.-Mexico relations)"
     language_family: str  # ISO 639-3 (e.g., "spa", "eng")
     language_variant: str # ISO 3166-1 alpha-3 (e.g., "MEX", "USA") - Content in English not from the USA routed to the en-intl corpus folder; Content from countries in Latin America where Spanish is the main language routed to LATAM corpus, all other Spanish content is routed to es-intl folder
 
-    ## What would be a good title to give to this section to denote the purpose of the category, keywords, and summary fields?
+    ## Content Classification and Discovery Metadata
     category: Optional[str] = None  # Initially empty - to be populated by clustering algorithms later
     keywords: List[str] = [] # Can be generated or manually provided - Let's build in functionality to generate this automatically
     summary: Optional[str] = None # Aids in AI processing, searching, and human understanding - Let's build in functionality to generate this automatically
 
     ## Specifications - matches translation specifications in UI
-    text_type: str # Translations automatically rejected from corpus in keeping with best practices for special language corpora formation
+    text_type: str 
     purpose: str 
     point_of_view: str
     audience: str
     reach: str
-    word_count: str # Approximate value calculated from txt files once those have been created; used to measure the reliability of the corpus in terms of word count - for special language corpora, a starter word count of 100,000 is recommended
+    word_count: str # Approximate value calculated by GAI from txt files once those have been created; used to measure the reliability of the corpus in terms of word count - for special language corpora, a starter word count of 100,000 is recommended
 
     ## Book info if applicable
     book_title: Optional[str] = None
     editors: Optional[List[str]] = []
-    translators: Optional[List[str]] = [] # Should translator information go closer to the top?
 
     ## Journal info if applicable
     journal_title: Optional[str] = None
@@ -153,13 +164,14 @@ class DocumentMetadata(BaseModel):
     publisher: Optional[str] = None
 
     ## Citation information (supporting multiple standards)
-    place_of_publication: Optional[str] = None  # Retained for comprehensive citation support
-    page_range_start: Optional[int] = None  # Retained for comprehensive citation support
-    page_range_end: Optional[int] = None  # Retained for comprehensive citation support
+    # Place of publication and page range retained for comprehensive citation support
+    place_of_publication: Optional[str] = None
+    page_range_start: Optional[int] = None
+    page_range_end: Optional[int] = None
     citation_formats: Optional[Dict[str, str]] = None  # Can store pre-formatted citations in different styles
     
     # Content storage
-    # Why are these marked as optional?
+    # QUESTION Why were all of these marked as optional?
     original_file_path: str  # Path to original unprocessed document
     processed_file_path: str  # Path to processed text file for vector generation
     corpus_path: str  # e.g., "tl/en-US/processed/Smith_TranslationQuality_2022.txt" - Isn't this a redundant item with "processed_file_path"? Is this needed?
@@ -168,7 +180,7 @@ class DocumentMetadata(BaseModel):
     content_url: Optional[str] = None  # Optional, only for linked rather than uploaded content
 
     # Document structure
-    # How is this part of the file supposed to work?
+    # QUESTION How is this part of the file supposed to work?
     sections: Optional[List[DocumentSection]] = None # Sections of the document, required even if just one section
     
     # Vector embeddings
@@ -176,6 +188,7 @@ class DocumentMetadata(BaseModel):
     section_vectors: Optional[List[DocumentVector]] = None  # Vectors for individual sections
     
     # For knowledge graph connections
+    # TODO: Expand entity_references when implementing the knowledge graph component
     entity_references: Optional[Dict[str, List[str]]] = None  # Entity type -> list of entity IDs
     
     # Author information - organizations or people or both
@@ -183,13 +196,13 @@ class DocumentMetadata(BaseModel):
     organization_authors: Optional[List[OrganizationAuthor]] = None
     
     # Metadata about the submission itself
-    # Wouldn't it be logical for this information to be presented above the content storage section?
+    # QUESTION Wouldn't it be logical for this information to be presented above the content storage section?
     contributor: str  # Person submitting this content
     created_at: datetime = Field(default_factory=datetime.utcnow)
     updated_at: datetime = Field(default_factory=datetime.utcnow)
     notes: Optional[str] = None  # Additional information provided by the contributor
     
-    # This example part needs to be updated once we've finalized the schema above
+    # REVISION This example part needs to be updated once we've finalized the schema above
     class Config:
         allow_population_by_field_name = True
         arbitrary_types_allowed = True
@@ -279,8 +292,32 @@ class DocumentMetadata(BaseModel):
             }
         }
 
+    schema_extra = {
+    "example": {
+        # Your other example fields...
+        "status": "validated",
+        "status_change_history": [
+            {
+                "from_status": None,
+                "to_status": "new",
+                "changed_at": "2025-04-01T10:00:00.000Z",
+                "changed_by": "submission_system", 
+                "reason": "Initial submission"
+            },
+            {
+                "from_status": "new",
+                "to_status": "validated", 
+                "changed_at": "2025-04-02T14:30:00.000Z",
+                "changed_by": "validator_username",
+                "reason": "Document meets all corpus inclusion criteria"
+            }
+        ],
+        # Continue with other example fields...
+    }
+}
+
 # For response models (without certain fields)
-# What is this part for?
+# QUESTION What is this part for?
 class DocumentMetadataResponse(BaseModel):
     id: str = Field(..., alias="_id")
     title: str

@@ -1,20 +1,28 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="eng-USA">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document-Level Translation Interface</title>
+    <title>Contextual Auto-Translator</title>
     <link rel="stylesheet" href="frontend/css/styles.css">
 </head>
 <body>
     <header class="header">
         <nav class="nav-container"> <!-- Turn navigational menu into React component -->
-            <h1 class="nav-title">Corpus-Graph Document Translation</h1>
+            <h1 class="nav-title">Contextual Automatic Translator</h1>
             <div class="nav-items">
-                <a href="index.html" class="nav-item">Auto-Translator</a>
-                <a href="#" class="nav-item">Reporting</a>
+                <div class="nav-item dropdown">
+                    <div class="dropdown-toggle">Knowledge Base</div>
+                    <div class="dropdown-menu">
+                        <a href="#" class="dropdown-item">Submit Content</a>
+                        <a href="#" class="dropdown-item">Validate Content <span class="auth-only">(authenticated users only)</span></a>
+                        <a href="#" class="dropdown-item">Search Content</a>
+                    </div>
+                </div>
+                <a href="#" class="nav-item">Auto-Translator</a>
                 <a href="#" class="nav-item">About</a>
-                <a href="references.html" class="nav-item">References</a>
+                <a href="frontend/references.html" class="nav-item">References</a>
+                <a href="#" class="nav-item">Contact</a>
             </div>
         </nav>
     </header>
@@ -499,6 +507,7 @@
         <p>Corpus-Graph Document Translation Project - Licensed under AGPL-3.0</p>
     </footer>
 
+    <script src="frontend/js/navbar.js"></script>
     <script src="frontend/js/translation-interface.js"></script>
 </body>
 </html>

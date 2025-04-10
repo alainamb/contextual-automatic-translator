@@ -88,9 +88,12 @@ This project incorporates translation quality evaluation methodologies outlined 
 auto-translator-corpora/
 ├── gai/ # Generative AI corpora
 │   ├── en-intl/ # English content in variants besides U.S. English
-│   │   ├── metadata/
-│   │   ├── processed/
-│   │   └── submissions/
+│   │   ├── submissions/       # Initial upload location (status: "new")
+│   │   ├── validated/         # Validated documents
+│   │   ├── rejected/          # Rejected documents
+│   │   ├── deprecated/        # Deprecated documents (previously valid)
+│   │   ├── processed/         # Processed text files (of validated docs)
+│   │   └── metadata/          # JSON metadata files
 │   ├── en-us/ # Prioritized English content
 │   │   └── [Similar structure]
 │   ├── es-intl/ # Spanish content in variants besides LATAM Spanish
