@@ -1,5 +1,5 @@
-# Corpus-Graph Document Translation
-Corpus informed, graph-based document-level translation
+# Contextual Automatic Translator
+The Contextual Automatic Translator produces bespoke translations through the integration of specifications, specialized corpora and terminological knowledge graphs. This translator also take a full-document (rather than a sentence-by-sentence) approach to translation.
 
 ## Overview
 This project investigates potential improvements to machine translation by combining these approaches:
@@ -18,7 +18,7 @@ This project investigates potential improvements to machine translation by combi
 ## Project Structure
 
 ```
-corpus-graph-document-translation/
+contextual-automatic-translator/
 ├── backend/
 │   ├── .env # Environment variables file (not tracked by git)
 │   ├── app/
@@ -34,6 +34,12 @@ corpus-graph-document-translation/
 ├── frontend/                     # GitHub Pages implementation
 │   ├── css/
 │   ├── js/
+│   ├── submissions.html
+│   ├── validation.html
+│   ├── kb-search.html
+│   ├── references.html
+│   ├── js/
+│   │   └── navbar.js    
 ├── index.html                    
 ├── .gitignore                    # Excludes backend/.env
 ├── LICENSE
@@ -125,16 +131,16 @@ This work is licensed under a GNU Affero General Public License (AGPL) v3.0.
 If you use this project in your research, please cite it as:
 
 APA:
-Brandt, A. (2025). Corpus-graph-document-translation: Corpus informed, graph-based document-level translation. GitHub. https://github.com/alainamb/corpus-graph-document-translation
+Brandt, A. (2025). Contextual Automatic Translator: Integrating Specifications, Specialized Corpora & Terminological Knowledge into a Whole Document Approach. GitHub. https://github.com/alainamb/corpus-graph-document-translation
 
 BibTeX:
-@misc{corpusgraphtranslation2025,
+@misc{contextualautomatictranslator2025,
     author = {Brandt, Alaina},
-    title = {Corpus-graph-document-translation: Corpus informed, graph-based document-level translation},
+    title = {Contextual Automatic Translator: Integrating Specifications, Specialized Corpora & Terminological Knowledge into a Whole Document Approach},
     year = {2025},
     publisher = {GitHub},
     journal = {GitHub repository},
-    howpublished = {\url{https://github.com/alainamb/corpus-graph-document-translation}}
+    howpublished = {\url{https://github.com/alainamb/contextual-automatic-translator}}
 }
 
 ## Contact
