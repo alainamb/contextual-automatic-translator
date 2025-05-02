@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="eng-USA">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contact</title>
+    <link rel="stylesheet" href="frontend/css/styles.css">
+</head>
+<body>
+    <header class="header">
+        <nav class="nav-container"> <!-- Turn navigational menu into React component -->
+            <h1 class="nav-title">Contextual Automatic Translator</h1>
+            <div class="nav-items">
+                <div class="nav-item dropdown">
+                    <div class="dropdown-toggle">Knowledge Base</div>
+                    <div class="dropdown-menu">
+                        <a href="#" class="dropdown-item">Submit Content</a>
+                        <a href="#" class="dropdown-item">Validate Content <span class="auth-only">(authenticated users only)</span></a>
+                        <a href="#" class="dropdown-item">Search Content</a>
+                    </div>
+                </div>
+                <a href="#" class="nav-item">Auto-Translator</a>
+                <a href="#" class="nav-item">About</a>
+                <a href="frontend/references.html" class="nav-item">References</a>
+                <a href="frontend/contact.html" class="nav-item">Contact</a>
+            </div>
+        </nav>
+    </header>
+    <div id="formContainer">
+        <form id="contactForm">
+        <div>Name</div>
+        <input type="text" id="name" name="name" required>
+
+        <div>Email</div>
+        <input type="email" id="email" name="email" required>
+
+        <div>Subject</div>
+        <input type="text" id="subject" name="subject" required>
+
+        <div>Message</div>
+        <textarea id="message" name="message" rows="5" cols="30" required></textarea>
+
+        <button type="submit">Submit</button>
+        </form>
+    </div>
+
+    <div id="thankYouMessage">
+        <h2>Thank you for your message!</h2>
+        <p>We are not yet collecting and responding to messages. Would you like to send another message?</p>
+        <button id="yesButton">Yes</button>
+        <button id="noButton">No</button>
+    </div>
+
+    <script>
+        document.getElementById('contactForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            // Collect form data
+            const formData = {
+                name: document.getElementById('name').value,
+                email: document.getElementById('email').value,
+                subject: document.getElementById('subject').value,
+                message: document.getElementById('message').value
+            };
+            
+            // Here you would normally send the data to your server
+            console.log('Form data:', formData);
+            
+            // Hide form and show thank you message
+            document.getElementById('formContainer').style.display = 'none';
+            document.getElementById('thankYouMessage').style.display = 'block';
+        });
+        
+        // Handle "Yes" button click
+        document.getElementById('yesButton').addEventListener('click', function() {
+            // Reset the form
+            document.getElementById('contactForm').reset();
+            
+            // Hide thank you message and show form again
+            document.getElementById('thankYouMessage').style.display = 'none';
+            document.getElementById('formContainer').style.display = 'block';
+        });
+        
+        // Handle "No" button click
+        document.getElementById('noButton').addEventListener('click', function() {
+            // Redirect to another page
+            window.location.href = '../index.html';
+        });
+    </script>
+
+    <script src="frontend/js/navbar.js"></script>
+</body>
+</html>
